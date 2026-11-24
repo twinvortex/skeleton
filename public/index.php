@@ -25,7 +25,11 @@ date_default_timezone_set(Config::get('timezone'));
 
 // save sessions to a custom folder
 if(Config::get('session') === true) {
-	session_save_path(Config::get('sessions_path'));
+	$sessionsPath = Config::get('sessions_path');
+	if (!is_dir($sessionsPath)) {
+		mkdir($sessionsPath, 0775, true);
+	}
+	session_save_path($sessionsPath);
 }
 
 // Starting the session

@@ -20,8 +20,8 @@
     },
     "autoload": {
         "psr-4": {
-            "Vortex\\Config\\": "vendor/Vortex/Config",
-            "Vortex\\Database\\": "vendor/Vortex/Database"
+            "Vortex\\Config\\": "src/Vortex/Config/",
+            "Vortex\\Database\\": "src/Vortex/Database/"
         },
         "classmap": ["src/"],
         "files": ["src/Libs/helpers.php", "src/Libs/pagination.php"]

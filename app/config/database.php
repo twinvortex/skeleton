@@ -5,8 +5,8 @@ return array(
 		'development' => array(
 				'host' => 'localhost',
 				'database' => 'spiral',
-				'username' => 'root',
-				'password' => 'root',
+				'username' => 'dbadmin',
+				'password' => 'dbadmin',
 				'collation' => 'utf8_unicode_ci',
 				'charset' => 'utf8'
 			),
@@ -15,8 +15,8 @@ return array(
 		'production' => array(
 				'host' => 'localhost',
 				'database' => 'spiral',
-				'username' => 'root',
-				'password' => 'root',
+				'username' => 'dbadmin',
+				'password' => 'dbadmin',
 				'collation' => 'utf8_unicode_ci',
 				'charset' => 'utf8'
 			),

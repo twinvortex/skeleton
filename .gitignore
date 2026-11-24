@@ -1,6 +1,7 @@
-
-app/sessions/
-app/cache/
+app/sessions/*
+!app/sessions/.gitkeep
+app/cache/*
+!app/cache/.gitkeep
 .idea/
 node_modules/
 vendor
