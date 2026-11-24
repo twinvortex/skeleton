@@ -2,14 +2,12 @@
 <?php require 'top-bar.php'; ?>
 	<div class="container container-pad">
 		<div class="row">
-			<div class="col-sm-12">
-				<?php require 'sidebar.php'; ?>
-				<!-- Main -->
-				<div class="col-sm-10">
-					<div class="col-sm-12"><h3><i class="fa fa-credit-card"></i> Subscriptions</h3><hr/></div>
-				</div>
-				<!-- End Main -->
+			<?php require 'sidebar.php'; ?>
+			<!-- Main -->
+			<div class="col-sm-10">
+				<div class="col-sm-12"><h3><i class="fa fa-credit-card"></i> Subscriptions</h3><hr/></div>
 			</div>
+			<!-- End Main -->
 		</div>
 	</div>
 

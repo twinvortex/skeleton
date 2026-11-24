@@ -11,9 +11,9 @@ Config::setDirScan( __DIR__ . '/app/config' );
 
 $app = new Application('Vortex', '1.0');
 
-$app->add(new DBExportCommand);
-$app->add(new DBExportSchemaCommand);
-$app->add(new DBImportCommand);
-$app->add(new GenerateControllerCommand);
-$app->add(new GenerateCommand);
+$app->addCommand(new DBExportCommand);
+$app->addCommand(new DBExportSchemaCommand);
+$app->addCommand(new DBImportCommand);
+$app->addCommand(new GenerateControllerCommand);
+$app->addCommand(new GenerateCommand);
 $app->run();

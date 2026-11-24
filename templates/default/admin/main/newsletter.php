@@ -2,10 +2,9 @@
 <?php require 'top-bar.php'; ?>
 	<div class="container container-pad">
 		<div class="row">
-			<div class="col-sm-12">
-				<?php require 'sidebar.php'; ?>
-				<!-- Main -->
-				<div class="col-sm-10">
+			<?php require 'sidebar.php'; ?>
+			<!-- Main -->
+			<div class="col-sm-10">
 					<div class="col-sm-12"><h3><i class="fa fa-newspaper-o"></i> Newsletter Subscriptions<hr></h3></div>
 					<?php if($this->message): ?>
 						<span class="col-sm-12 alert alert-success"><?=$this->message?></span>
@@ -38,7 +37,7 @@
 							<select name="action" style="margin-top:7px">
 								<option value="delete">Delete</option>
 							</select>
-							<button class="btn btn-default btn-sm" name="submit" value="submit" style="width:100px;margin-left:5px;">Submit</button>
+							<button class="btn btn-secondary btn-sm" name="submit" value="submit" style="width:100px;margin-left:5px;">Submit</button>
 						</div>
 					</form>
 						<?php else: ?>
@@ -49,10 +48,9 @@
 					<div class="col-sm-12">
 						<?php pagination($this->manage->getTotalEmails(), '/manage/newsletter/') ?>
 					</div>
-				</div>
-
-				<!-- End Main -->
 			</div>
+
+			<!-- End Main -->
 		</div>
 	</div>
 

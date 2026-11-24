@@ -11,14 +11,14 @@ class DBExportCommand extends Command {
 
 	private $config;
 
-	protected function configure() {
+	protected function configure(): void {
 		$this
 			->setName('db:export')
 			->setDescription('Export Database')
 			->addArgument('file', InputArgument::REQUIRED, 'The database file where you want to save the db');
 	}
 
-	protected function execute(InputInterface $input, OutputInterface $output) {
+	protected function execute(InputInterface $input, OutputInterface $output): int {
 		$file = $input->getArgument('file');
 
 		// Get database configuration so we can export the database
@@ -32,23 +32,26 @@ class DBExportCommand extends Command {
 			$file = $this->config->get('dbs_path') . '/' . $file . '.sql';
 			$output->writeln('<info>Writing database to ' . $file . '</info>');
 
-			$process = new Process('mysqldump -u"' . $dbUser . '" -p"' . $dbPass . '" ' . $dbName . ' > ' . $file);
+			$env     = $dbPass !== '' ? ['MYSQL_PWD' => $dbPass] : null;
+			$process = new Process(['mysqldump', '-u' . $dbUser, $dbName], null, $env);
 			$process->run();
-
-			// Export sql file for codeceptions in /tests
-			$dumpLocation = $this->config->get('main_path') . '/tests/_data/';
-			if (is_dir($dumpLocation)) {
-				$process = new Process('mysqldump -u"' . $dbUser . '" -p"' . $dbPass . '" ' . $dbName . ' > ' . $dumpLocation . 'dump.sql');
-				$process->run();
-				$output->writeln('<info>Exported database for tests in ' . $dumpLocation . 'dump.sql</info>');
-			}
 
 			if ( ! $process->isSuccessful()) {
 				throw new \RuntimeException($process->getErrorOutput());
 			}
 
-			$output->writeln($process->getOutput());
+			$dump = $process->getOutput();
+			file_put_contents($file, $dump);
+
+			// Export sql file for codeception in /tests
+			$dumpLocation = $this->config->get('main_path') . '/tests/_data/';
+			if (is_dir($dumpLocation)) {
+				file_put_contents($dumpLocation . 'dump.sql', $dump);
+				$output->writeln('<info>Exported database for tests in ' . $dumpLocation . 'dump.sql</info>');
+			}
 		}
+
+		return Command::SUCCESS;
 	}
 
 }

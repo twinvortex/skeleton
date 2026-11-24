@@ -2,11 +2,10 @@
 <?php require 'top-bar.php'; ?>
 	<div class="container container-pad">
 		<div class="row">
-			<div class="col-sm-12">
-				<?php require 'sidebar.php'; ?>
+			<?php require 'sidebar.php'; ?>
 
-				<!-- Main -->
-				<div class="col-sm-10">
+			<!-- Main -->
+			<div class="col-sm-10">
 					<div class="col-sm-12"><h3><i class="fa fa-users"></i> Latest Users</h3><hr/>
 					<?php if($this->message): ?>
 						<span class="alert alert-success col-sm-12"><?=$this->message?></span>
@@ -43,9 +42,8 @@
 							<div class="alert alert-info">No users!</div>
 						</div>
 					<?php endif; ?>
-				</div>
-				<!-- End Main -->
 			</div>
+			<!-- End Main -->
 		</div>
 	</div>
 

@@ -10,12 +10,14 @@
     ],
     "minimum-stability": "stable",
     "require": {
-        "symfony/console": "^3.4",
-        "symfony/process": "~5.4",
-        "codeception/codeception": "*",
-        "fzaninotto/faker": "~1.4"
+        "php": ">=8.2",
+        "symfony/console": "^7.4",
+        "symfony/process": "^7.4"
     },
-
+    "require-dev": {
+        "codeception/codeception": "^5.3",
+        "fakerphp/faker": "^1.24"
+    },
     "autoload": {
         "psr-4": {
             "Vortex\\Config\\": "vendor/Vortex/Config",
@@ -23,6 +25,5 @@
         },
         "classmap": ["src/"],
         "files": ["src/Libs/helpers.php", "src/Libs/pagination.php"]
-
     }
 }

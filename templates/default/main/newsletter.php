@@ -19,12 +19,12 @@
 			}
 			?>
 			<form action="" method="post" enctype="application/x-www-form-urlencoded">
-				<div class="form-group">
+				<div class="mb-3">
 					<label for="email">Email</label>
 					<input type="hidden" name="token" value="<?=generateToken()?>">
 					<div align="center" style="margin-bottom: 20px;"><input type="email" name="email" id="email" class="form-control normal" placeholder="Enter your email" value="<?=stripField('email')?>"/></div>
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<label for="name">Name</label>
 					<div align="center"><input type="text" name="name" value="<?=stripField('name')?>" id="name" class="form-control normal" placeholder="Enter your name"></div>
 				</div>

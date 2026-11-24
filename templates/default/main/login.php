@@ -18,15 +18,15 @@
 			?>
 			<form action="" method="post" enctype="application/x-www-form-urlencoded" id="login">
 				<input type="hidden" name="token" value="<?=generateToken()?>" id="token">
-				<div class="form-group">
+				<div class="mb-3">
 					<label for="email">Email</label>
 					<input type="email" name="email" value="<?=stripField('email')?>" id="email" class="form-control normal" placeholder="Enter your email"/>
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<label for="password">Password</label>
 					<input type="password" name="password" id="password" class="form-control normal" placeholder="Enter your password"/>
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<button class="btn btn-primary" name="submit"><i class="fa fa-lock" style="margin-right:10px;"></i> Login</button>
 				</div>
 			</form>

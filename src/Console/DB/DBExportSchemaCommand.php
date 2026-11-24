@@ -11,38 +11,40 @@ class DBExportSchemaCommand extends Command {
 
 	private $config;
 
-
-	protected function configure() {
+	protected function configure(): void {
 		$this
-			->setName( 'db:export-schema' )
-			->setDescription( 'Export Database Schema' )
-			->addArgument( 'file', InputArgument::REQUIRED, 'The database file where you want to save the db schema' );
+			->setName('db:export-schema')
+			->setDescription('Export Database Schema')
+			->addArgument('file', InputArgument::REQUIRED, 'The database file where you want to save the db schema');
 	}
 
-	protected function execute( InputInterface $input, OutputInterface $output ) {
-		$file = $input->getArgument( 'file' );
+	protected function execute(InputInterface $input, OutputInterface $output): int {
+		$file = $input->getArgument('file');
 
 		// Get database configuration so we can export the database
 		$this->config = new Config();
-		$stage = $this->config->get( 'stage' );
+		$stage        = $this->config->get('stage');
 
-		$dbUser = $this->config->get( $stage, 'username' );
-		$dbPass = $this->config->get( $stage, 'password' );
-		$dbName = $this->config->get( $stage, 'database' );
+		$dbUser = $this->config->get($stage, 'username');
+		$dbPass = $this->config->get($stage, 'password');
+		$dbName = $this->config->get($stage, 'database');
 
-		if ( $file ) {
-			$file = $this->config->get( 'dbs_path' ) . '/' . $file . '-schema.sql';
-			$output->writeln( '<info>Writing database to ' . $file . '</info>' );
+		if ($file) {
+			$file = $this->config->get('dbs_path') . '/' . $file . '-schema.sql';
+			$output->writeln('<info>Writing database to ' . $file . '</info>');
 
-			$process = new Process( 'mysqldump --no-data -u"' . $dbUser . '" -p"' . $dbPass . '" ' . $dbName . ' > ' . $file );
+			$env     = $dbPass !== '' ? ['MYSQL_PWD' => $dbPass] : null;
+			$process = new Process(['mysqldump', '--no-data', '-u' . $dbUser, $dbName], null, $env);
 			$process->run();
 
-			if ( ! $process->isSuccessful() ) {
-				throw new \RuntimeException( $process->getErrorOutput() );
+			if ( ! $process->isSuccessful()) {
+				throw new \RuntimeException($process->getErrorOutput());
 			}
 
-			$output->writeln( $process->getOutput() );
+			file_put_contents($file, $process->getOutput());
 		}
+
+		return Command::SUCCESS;
 	}
 
 }

@@ -2,11 +2,10 @@
 <?php require 'top-bar.php'; ?>
 	<div class="container container-pad">
 		<div class="row">
-			<div class="col-sm-12">
-				<?php require 'sidebar.php'; ?>
-				<!-- Main -->
-				<div class="col-sm-10">
-					<div class="col-ms-12">
+			<?php require 'sidebar.php'; ?>
+			<!-- Main -->
+			<div class="col-sm-10">
+				<div class="col-sm-12">
 						<h3><i class="fa fa-users"></i> Users<hr></h3>
 						<?php if($this->message): ?>
 						<span class="alert alert-success col-sm-12"><?=$this->message?></span>
@@ -44,7 +43,7 @@
 									<option value="disable">Disable</option>
 									<option value="enable">Enable</option>
 								</select>
-								<button class="btn btn-default btn-sm" name="submit" value="submit" style="width:100px;margin-left:5px;">Submit</button>
+								<button class="btn btn-secondary btn-sm" name="submit" value="submit" style="width:100px;margin-left:5px;">Submit</button>
 							</div>
 						</form>
 						<?php else: ?>
@@ -55,10 +54,9 @@
 						<div class="col-sm-12">
 							<?php pagination($this->manage->getTotal(), '/manage/users/') ?>
 						</div>
-					</div>
 				</div>
-				<!-- End Main -->
 			</div>
+			<!-- End Main -->
 		</div>
 	</div>
 

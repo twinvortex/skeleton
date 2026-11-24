@@ -1,40 +1,64 @@
-var gulp = require('gulp');
-var sass = require('gulp-sass');
-var autoprefixer = require('gulp-autoprefixer');
-var minifycss = require('gulp-minify-css');
-var uglify = require('gulp-uglify');
+'use strict';
 
-gulp.task('css', function () {
-	gulp.src('assets/sass/**/*.scss')
-		.pipe(sass({errLogToConsole: true}))
-		.pipe(autoprefixer('last 15 versions'))
-		.pipe(minifycss())
-		.pipe(gulp.dest('public/assets/css'))
-});
+const { Transform } = require('node:stream');
+const gulp = require('gulp');
+const dartSass = require('sass');
+const gulpSass = require('gulp-sass')(dartSass);
+const postcss = require('gulp-postcss');
+const autoprefixer = require('autoprefixer');
+const cssnano = require('cssnano');
+const { minify } = require('terser');
 
-gulp.task('compress', function () {
-	gulp.src('assets/js/**/*.js')
-		.pipe(uglify())
-		.pipe(gulp.dest('public/assets/js'))
-});
+function minifyJs() {
+	return new Transform({
+		objectMode: true,
+		async transform(file, _encoding, callback) {
+			if (file.isNull() || !file.isBuffer()) {
+				callback(null, file);
+				return;
+			}
+			try {
+				const result = await minify(file.contents.toString('utf8'));
+				if (result.code !== undefined) {
+					file.contents = Buffer.from(result.code, 'utf8');
+				}
+				callback(null, file);
+			} catch (err) {
+				callback(err);
+			}
+		},
+	});
+}
 
-gulp.task('images', function () {
-	gulp.src('assets/images/**/*.jpg')
+function css() {
+	return gulp.src('assets/sass/**/*.scss')
+		.pipe(gulpSass().on('error', gulpSass.logError))
+		.pipe(postcss([autoprefixer(), cssnano()]))
+		.pipe(gulp.dest('public/assets/css'));
+}
+
+function compress() {
+	return gulp.src('assets/js/**/*.js')
+		.pipe(minifyJs())
+		.pipe(gulp.dest('public/assets/js'));
+}
+
+function images() {
+	return gulp.src('assets/images/**/*.{jpg,png,gif}', { encoding: false })
 		.pipe(gulp.dest('public/assets/images'));
+}
 
-	gulp.src('assets/images/**/*.png')
-		.pipe(gulp.dest('public/assets/images'));
+function watchFiles() {
+	gulp.watch('assets/sass/**/*.scss', css);
+	gulp.watch('assets/js/**/*.js', compress);
+	gulp.watch('assets/images/**/*.{jpg,png,gif}', images);
+}
 
-	gulp.src('assets/images/**/*.gif')
-		.pipe(gulp.dest('public/assets/images'));
-});
+const build = gulp.parallel(css, compress, images);
 
-gulp.task('watch', function () {
-	gulp.watch('assets/sass/**/*.scss', ['css']);
-	gulp.watch('assets/js/**/*.js', ['compress']);
-	gulp.watch('assets/images/**/*.jpg', ['images']);
-	gulp.watch('assets/images/**/*.png', ['images']);
-	gulp.watch('assets/images/**/*.gif', ['images']);
-});
-
-gulp.task('default', ['watch']);
+exports.css = css;
+exports.compress = compress;
+exports.images = images;
+exports.watch = watchFiles;
+exports.build = build;
+exports.default = watchFiles;

@@ -20,19 +20,19 @@
 			?>
 			<form action="" method="post" enctype="application/x-www-form-urlencoded" id="signup">
 				<input type="hidden" name="token" value="<?=generateToken()?>">
-				<div class="form-group">
+				<div class="mb-3">
 					<label for="email">Email</label>
 					<input type="email" name="email" id="email" class="form-control normal" placeholder="Enter your email" value="<?=stripField('email')?>"/>
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<label for="password">Password</label>
 					<input type="password" name="password" id="password" class="form-control normal" placeholder="Enter your password"/>
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<label for="confirmPassword">Confirm Password</label>
 					<input type="password" name="confirm_password" id="confirmPassword" class="form-control normal" placeholder="Confirm your password"/>
 				</div>
-				<div class="form-group">
+				<div class="mb-3">
 					<button class="btn btn-primary" name="submit"><i class="fa fa-user-plus" style="margin-right:10px;"></i> Sign Up</button>
 				</div>
 			</form>
